@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'toggle_button.dart';
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -26,38 +28,55 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> widgets = [];
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+          child: Center(
+        child: Container(
+          width: 400,
+          height: 400,
+          child: new CustomPaint(
+            painter: ToggleButton(),
+          ),
+        ),
+      )),
+    );
+  }
 
-    widgets.add(Center(
-      child: new Stack(
-        alignment: AlignmentDirectional.center,
-        children: <Widget>[
-          new Container(
-            width: 400,
-            height: 400,
-            decoration: new BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.blue,
-              gradient: new LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.red.shade400, Colors.blue.shade400],
+  List<Widget> _another() {
+    return [
+      Center(
+        child: new Stack(
+          alignment: AlignmentDirectional.center,
+          children: <Widget>[
+            new Container(
+              width: 400,
+              height: 400,
+              decoration: new BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.blue,
+                gradient: new LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.red.shade400, Colors.blue.shade400],
+                ),
               ),
             ),
-          ),
 
-          new Container(
-            width: 400,
-            height: 400,
-            decoration: new BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.transparent,
-              border: new Border.all(
-                color: const Color(0x80ffffff),
-                width: 25,
+            new Container(
+              width: 400,
+              height: 400,
+              decoration: new BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.transparent,
+                border: new Border.all(
+                  color: const Color(0x80ffffff),
+                  width: 25,
+                ),
               ),
             ),
-          ),
 
 //          new Container(
 //            width: 350,
@@ -85,28 +104,21 @@ class _MyHomePageState extends State<MyHomePage> {
 //            ),
 //          ),
 
-          new Container(
-            width: 300,
-            height: 300,
-            decoration: new BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.transparent,
-              border: new Border.all(
-                color: const Color(0x681D1D1D),
-                width: 1.5,
+            new Container(
+              width: 300,
+              height: 300,
+              decoration: new BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.transparent,
+                border: new Border.all(
+                  color: const Color(0x681D1D1D),
+                  width: 1.5,
+                ),
               ),
             ),
-          ),
-
-        ],
-      ),
-    ));
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(child: widgets[0]),
-    );
+          ],
+        ),
+      )
+    ];
   }
 }

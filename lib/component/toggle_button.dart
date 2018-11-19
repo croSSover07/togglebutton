@@ -1,32 +1,31 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 class ToggleButton extends CustomPainter {
-  final _random = new Random();
-  Rect rect;
+  Rect _rect;
+
+  var _shadow =
+      const BoxShadow(color: const Color(0x55646464), blurRadius: 32.0);
+  var _shadowOutSide =
+      const BoxShadow(color: const Color(0xffd9d9d9), blurRadius: 32.0);
 
   @override
   void paint(Canvas canvas, Size size) {
-
     Offset center = new Offset(size.width / 2, size.height / 2);
     double radius = min(size.width / 2, size.height / 2);
-    rect = new Rect.fromCircle(center: center, radius: radius);
+    _rect = new Rect.fromCircle(center: center, radius: radius);
 
-    var line = new Paint()
-      ..color = Colors.grey
-      ..style = PaintingStyle.fill;
+    canvas.drawCircle(center, radius,
+        _shadowOutSide.toPaint()..blendMode = BlendMode.clear); //shadow outside
+    canvas.drawCircle(center, radius, _getColorLine());
 
-    canvas.drawCircle(center, radius, line);
+    canvas.drawCircle(center, radius * 0.85, _shadow.toPaint());
+    canvas.drawCircle(center, radius * 0.85, _shadow.toPaint());
+    canvas.drawCircle(center, radius * 0.85, _getColorLine());
 
-//    canvas.drawArc(rect, -pi / 2, 2 * pi, false, _getColorLine(true));
-      canvas.drawCircle(center, radius, _getColorLine());
-//      canvas.drawShadow(path, color, elevation, transparentOccluder)
-      
-//      canvas.ma
-
-//    canvas.drawArc(rect, -pi / 2 + pi / 4, pi / 4, true, _getColorLine(true));
-//    canvas.drawArc(rect, -pi / 2 + pi / 2, pi / 4, true, _getColorLine(true));
+    canvas.drawCircle(center, radius * 0.7, _shadow.toPaint());
+    canvas.drawCircle(center, radius * 0.7, _shadow.toPaint());
+    canvas.drawCircle(center, radius * 0.7, _getColorLine());
   }
 
   @override
@@ -34,11 +33,12 @@ class ToggleButton extends CustomPainter {
     return true;
   }
 
-  Paint _getColorLine( ) {
-
+  Paint _getColorLine() {
     var colors = [
-      Colors.red.shade300,
-      Colors.blue.shade300
+      Colors.red.shade400,
+      Colors.red.shade200,
+      Colors.blue.shade200,
+      Colors.blue.shade400
     ];
 
     return new Paint()
@@ -48,14 +48,6 @@ class ToggleButton extends CustomPainter {
               colors: colors,
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter)
-          .createShader(rect);
-  }
-
-  Color _randomColor() {
-    var a = 255; // alpha = 0..255
-    var r = _random.nextInt(256); // red = 0..255
-    var g = _random.nextInt(256); // green = 0..255
-    var b = _random.nextInt(256); // blue = 0..255
-    return Color.fromARGB(a, r, g, b);
+          .createShader(_rect);
   }
 }
