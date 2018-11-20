@@ -9,6 +9,13 @@ class BackgroundPaint extends CustomPainter {
   var _shadowOutSide =
       const BoxShadow(color: const Color(0xffd9d9d9), blurRadius: 32.0);
 
+  var _colors = [
+    Colors.red.shade400,
+    Colors.red.shade200,
+    Colors.blue.shade200,
+    Colors.blue.shade400
+  ];
+
   @override
   void paint(Canvas canvas, Size size) {
     Offset center = new Offset(size.width / 2, size.height / 2);
@@ -34,18 +41,11 @@ class BackgroundPaint extends CustomPainter {
   }
 
   Paint _getColorLine() {
-    var colors = [
-      Colors.red.shade400,
-      Colors.red.shade200,
-      Colors.blue.shade200,
-      Colors.blue.shade400
-    ];
-
-    return new Paint()
+    return Paint()
       ..style = PaintingStyle.fill
       ..strokeWidth = 32.0
       ..shader = new LinearGradient(
-              colors: colors,
+              colors: _colors,
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter)
           .createShader(_rect);

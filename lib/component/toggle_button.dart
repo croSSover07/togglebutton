@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'dart:math';
 import 'background_paint.dart';
 
 class ToggleButtonWidget extends StatefulWidget {
@@ -84,7 +84,7 @@ class _ToggleButtonState extends State<StatefulWidget>
             ),
             builder: (BuildContext context, Widget _widget) {
               return new Transform.rotate(
-                angle: _animationController.value * 3.15,
+                angle: _animationController.value * pi,
                 child: _widget,
               );
             },
