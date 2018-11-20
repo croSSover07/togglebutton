@@ -31,8 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
         ),
         body: ToggleButtonWidget(
-          textOn: "ON",
-          textOff: "OFF",
+          textOn: "On",
+          textOff: "Off",
           onPressed: onPress,
           isActivated: false,
         ));

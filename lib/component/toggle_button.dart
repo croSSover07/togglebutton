@@ -91,7 +91,10 @@ class _ToggleButtonState extends State<StatefulWidget>
           ),
           Center(
               child: Text(_isActivated ? textOn : textOff,
-                  style: TextStyle(color: Colors.white, fontSize: 32.0))),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 128.0,
+                      fontStyle: FontStyle.italic))),
         ],
       )),
     );
