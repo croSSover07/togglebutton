@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void onPress(bool isActivated) {
-    print("isActuvate: $isActivated");
+    print("isActivate: $isActivated");
   }
 
   List<Widget> _another() {
