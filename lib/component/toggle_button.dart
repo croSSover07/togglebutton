@@ -1,53 +1,68 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 
-class ToggleButton extends CustomPainter {
-  Rect _rect;
+import 'background_paint.dart';
 
-  var _shadow =
-      const BoxShadow(color: const Color(0x55646464), blurRadius: 32.0);
-  var _shadowOutSide =
-      const BoxShadow(color: const Color(0xffd9d9d9), blurRadius: 32.0);
+class ToggleButtonWidget extends StatefulWidget {
+  final String textOn;
+  final String textOff;
+  Function(bool) onPressed;
+
+  bool isActivated = false;
+
+  ToggleButtonWidget(
+      {this.textOn, this.textOff, this.onPressed, this.isActivated});
 
   @override
-  void paint(Canvas canvas, Size size) {
-    Offset center = new Offset(size.width / 2, size.height / 2);
-    double radius = min(size.width / 2, size.height / 2);
-    _rect = new Rect.fromCircle(center: center, radius: radius);
+  State<StatefulWidget> createState() => _ToggleButtonState(
+      textOn: textOn,
+      textOff: textOff,
+      onPressed: onPressed,
+      isActivate: isActivated);
+}
 
-    canvas.drawCircle(center, radius,
-        _shadowOutSide.toPaint()..blendMode = BlendMode.clear); //shadow outside
-    canvas.drawCircle(center, radius, _getColorLine());
+class _ToggleButtonState extends State<StatefulWidget> {
+  final String textOn;
+  final String textOff;
 
-    canvas.drawCircle(center, radius * 0.85, _shadow.toPaint());
-    canvas.drawCircle(center, radius * 0.85, _shadow.toPaint());
-    canvas.drawCircle(center, radius * 0.85, _getColorLine());
+  Function(bool) onPressed;
+  bool _isActivated = false;
 
-    canvas.drawCircle(center, radius * 0.7, _shadow.toPaint());
-    canvas.drawCircle(center, radius * 0.7, _shadow.toPaint());
-    canvas.drawCircle(center, radius * 0.7, _getColorLine());
+  set isActivated(bool value) {
+    setState(() {
+      _isActivated = value;
+    });
+  }
+
+  bool get isActivated => _isActivated;
+
+  _ToggleButtonState(
+      {this.textOn, this.textOff, this.onPressed, bool isActivate}) {
+    _isActivated = isActivate;
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
-
-  Paint _getColorLine() {
-    var colors = [
-      Colors.red.shade400,
-      Colors.red.shade200,
-      Colors.blue.shade200,
-      Colors.blue.shade400
-    ];
-
-    return new Paint()
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 32.0
-      ..shader = new LinearGradient(
-              colors: colors,
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter)
-          .createShader(_rect);
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        if (onPressed != null) {
+          setState(() {
+            _isActivated = !_isActivated;
+            onPressed(_isActivated);
+          });
+        }
+      },
+      child: Center(
+        child: Container(
+          width: 400,
+          height: 400,
+          child: new CustomPaint(
+            painter: BackgroundPaint(),
+            child: Center(
+                child: Text(_isActivated ? textOn : textOff,
+                    style: TextStyle(color: Colors.white, fontSize: 32.0))),
+          ),
+        ),
+      ),
+    );
   }
 }

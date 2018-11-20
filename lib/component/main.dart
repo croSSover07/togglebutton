@@ -24,25 +24,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  _MyHomePageState() {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-          child: Center(
-        child: Container(
-          width: 400,
-          height: 400,
-          child: new CustomPaint(
-            painter: ToggleButton(),
-          ),
+        appBar: AppBar(
+          title: Text(widget.title),
         ),
-      )),
-    );
+        body: ToggleButtonWidget(
+          textOn: "ON",
+          textOff: "OFF",
+          onPressed: onPress,
+          isActivated: false,
+        ));
+  }
+
+  void onPress(bool isActivated) {
+    print("isActuvate: $isActivated");
   }
 
   List<Widget> _another() {
