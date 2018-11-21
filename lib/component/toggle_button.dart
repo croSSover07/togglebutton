@@ -24,6 +24,8 @@ class ToggleButtonWidget extends StatefulWidget {
 
 class _ToggleButtonState extends State<StatefulWidget>
     with SingleTickerProviderStateMixin {
+  static const double size = 400;
+
   final String textOn;
   final String textOff;
 
@@ -65,8 +67,8 @@ class _ToggleButtonState extends State<StatefulWidget>
             animation: _animationController,
             child: Center(
               child: Container(
-                width: 400,
-                height: 400,
+                width: size,
+                height: size,
                 child: new CustomPaint(
                   painter: BackgroundPaint(),
                 ),
@@ -80,11 +82,28 @@ class _ToggleButtonState extends State<StatefulWidget>
             },
           ),
           Center(
-              child: Text(_isActivated ? textOn : textOff,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 109.0,//hot fix for pixel XL  (must be <110.0)
-                      fontStyle: FontStyle.italic))),
+              child: RaisedButton(
+            onPressed: _onTap,
+            shape: new CircleBorder(),
+            disabledColor: Colors.transparent,
+            color: Colors.transparent,
+            elevation: 0,
+            highlightElevation: 0,
+            disabledElevation: 0,
+            highlightColor: Colors.transparent,
+            splashColor: Colors.white30,
+            child: Container(
+              width: size * BackgroundPaint.insideScaleRadius,
+              height: size * BackgroundPaint.insideScaleRadius,
+              child: Center(
+                child: Text(_isActivated ? textOn : textOff,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 109.0, //hot fix for pixel XL  (must be <110.0)
+                        fontStyle: FontStyle.italic)),
+              ),
+            ),
+          )),
         ],
       )),
     );

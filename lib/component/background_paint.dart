@@ -1,7 +1,10 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class BackgroundPaint extends CustomPainter {
+  static const double insideScaleRadius = 0.7;
+
   static var _colors = [
     Colors.red.shade400,
     Colors.red.shade200,
@@ -25,9 +28,9 @@ class BackgroundPaint extends CustomPainter {
       ..style = PaintingStyle.fill
       ..strokeWidth = 32.0
       ..shader = new LinearGradient(
-          colors: _colors,
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter)
+              colors: _colors,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter)
           .createShader(rect);
 
     var blurPaint = Paint()
@@ -35,9 +38,9 @@ class BackgroundPaint extends CustomPainter {
       ..strokeWidth = 32.0
       ..maskFilter = MaskFilter.blur(BlurStyle.normal, 25.0)
       ..shader = new LinearGradient(
-          colors: _colorsDarker,
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter)
+              colors: _colorsDarker,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter)
           .createShader(rect);
 
     canvas.drawCircle(center, radius, blurPaint);
@@ -46,8 +49,8 @@ class BackgroundPaint extends CustomPainter {
     canvas.drawCircle(center, radius * 0.85, blurPaint);
     canvas.drawCircle(center, radius * 0.85, colorPaint);
 
-    canvas.drawCircle(center, radius * 0.7, blurPaint);
-    canvas.drawCircle(center, radius * 0.7, colorPaint);
+    canvas.drawCircle(center, radius * insideScaleRadius, blurPaint);
+    canvas.drawCircle(center, radius * insideScaleRadius, colorPaint);
   }
 
   @override
