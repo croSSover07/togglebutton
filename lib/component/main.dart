@@ -30,11 +30,17 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: ToggleButtonWidget(
-          textOn: "On",
-          textOff: "Off",
-          onPressed: onPress,
-          isActivated: false,
+        body: Center(
+          child: Container(
+            width: 400,
+            height: 400,
+            child: ToggleButtonWidget(
+              textOn: "On",
+              textOff: "Off",
+              onPressed: onPress,
+              isActivated: false,
+            ),
+          ),
         ));
   }
 

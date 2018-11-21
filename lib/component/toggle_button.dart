@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:flutter/material.dart';
+
 import 'background_paint.dart';
 
 class ToggleButtonWidget extends StatefulWidget {
@@ -55,19 +57,7 @@ class _ToggleButtonState extends State<StatefulWidget>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if (onPressed != null) {
-          setState(() {
-            _isActivated = !_isActivated;
-            if (_isActivated) {
-              _animationController.forward();
-            } else {
-              _animationController.reverse();
-            }
-            onPressed(_isActivated);
-          });
-        }
-      },
+      onTap: _onTap,
       child: Center(
           child: Stack(
         children: <Widget>[
@@ -93,10 +83,24 @@ class _ToggleButtonState extends State<StatefulWidget>
               child: Text(_isActivated ? textOn : textOff,
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 109.0, //hot fix for pixel XL  (must be <110.0)
+                      fontSize: 109.0,//hot fix for pixel XL  (must be <110.0)
                       fontStyle: FontStyle.italic))),
         ],
       )),
     );
+  }
+
+  void _onTap() {
+    if (onPressed != null) {
+      setState(() {
+        _isActivated = !_isActivated;
+        if (_isActivated) {
+          _animationController.forward();
+        } else {
+          _animationController.reverse();
+        }
+        onPressed(_isActivated);
+      });
+    }
   }
 }
