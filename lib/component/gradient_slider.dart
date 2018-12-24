@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
+import 'common.dart';
 
 class GradientSlider extends StatefulWidget {
+  final Function(Color) fun;
+
+  const GradientSlider({Key key, this.fun}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => _GradientSliderState();
+  State<StatefulWidget> createState() => _GradientSliderState(fun);
 }
 
 class _GradientSliderState extends State<GradientSlider> {
-
   double percent = 0.0;
 
   GlobalKey _sliderKey = GlobalKey();
   double _leftEdge = 0.0;
   double _rightEdge = 0.0;
   double _width = 0.0;
+
+  final Function(Color) fun;
+
+  _GradientSliderState(this.fun);
 
   @override
   void initState() {
@@ -35,41 +43,44 @@ class _GradientSliderState extends State<GradientSlider> {
         onTap: () {},
         onPanStart: (DragStartDetails details) {
           var position = details.globalPosition.dx;
-          _onClick(position);
+          _onMove(position);
         },
         onPanUpdate: (DragUpdateDetails details) {
           var position = details.globalPosition.dx;
-          _onClick(position);
+          _onMove(position);
         },
         onTapUp: (TapUpDetails details) {
           var position = details.globalPosition.dx;
-          _onClick(position);
+          _onMove(position);
         },
         onTapDown: (TapDownDetails details) {
           var position = details.globalPosition.dx;
-          _onClick(position);
+          _onMove(position);
         },
         child: Container(
           constraints: BoxConstraints.expand(height: 32.0),
           child: CustomPaint(
             key: _sliderKey,
-            painter: GragientSliderPaint(value: this.percent),
+            painter: GradientSliderPaint(value: this.percent),
           ),
         ));
   }
 
-  void _onClick(double position) {
+  void _onMove(double position) {
     if (position >= _leftEdge && position <= _rightEdge) {
       double distance = position - _leftEdge;
       setState(() {
         percent = distance / _width;
+        fun(GradientSliderPaint.getColor(percent));
       });
     }
   }
 }
 
-class GragientSliderPaint extends CustomPainter {
+class GradientSliderPaint extends CustomPainter {
   final double value;
+
+  LinearGradient _lgrad;
 
   static var _colors = [
     Colors.red.shade500,
@@ -77,8 +88,20 @@ class GragientSliderPaint extends CustomPainter {
     Colors.blue.shade500
   ];
 
-  GragientSliderPaint({@required this.value})
-      : assert(value >= 0.0 && value <= 1.0);
+  static var _stops = [
+    0 / 3,
+    1.5 / 3,
+    3 / 3
+  ]; //length must be the same as length _colors
+
+  GradientSliderPaint({@required this.value})
+      : assert(value >= 0.0 && value <= 1.0) {
+    _lgrad = new LinearGradient(
+        colors: _colors,
+        begin: Alignment.centerLeft,
+        stops: _stops,
+        end: Alignment.centerRight);
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -90,11 +113,7 @@ class GragientSliderPaint extends CustomPainter {
     var blurPaint = Paint()
       ..style = PaintingStyle.fill
       ..strokeWidth = size.height
-      ..shader = new LinearGradient(
-              colors: _colors,
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight)
-          .createShader(rect);
+      ..shader = _lgrad.createShader(rect);
 
     canvas.drawLine(start, end, blurPaint);
 
@@ -109,5 +128,9 @@ class GragientSliderPaint extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
+  }
+
+  static Color getColor(double value) {
+    return lerpGradient(_colors, _stops, value);
   }
 }

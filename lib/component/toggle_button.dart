@@ -63,47 +63,54 @@ class _ToggleButtonState extends State<StatefulWidget>
       child: Center(
           child: Stack(
         children: <Widget>[
-          AnimatedBuilder(
-            animation: _animationController,
+          Center(
+            child: AnimatedBuilder(
+              animation: _animationController,
+              child: Center(
+                child: Container(
+                  width: size,
+                  height: size,
+                  child: new CustomPaint(
+                    painter: BackgroundPaint(),
+                  ),
+                ),
+              ),
+              builder: (BuildContext context, Widget _widget) {
+                return new Transform.rotate(
+                  angle: _animationController.value * pi,
+                  child: _widget,
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: size * (1 - BackgroundPaint.insideScaleRadius) / 2),
             child: Center(
-              child: Container(
-                width: size,
-                height: size,
-                child: new CustomPaint(
-                  painter: BackgroundPaint(),
+              child: RaisedButton(
+                onPressed: _onTap,
+                shape: new CircleBorder(),
+                disabledColor: Colors.transparent,
+                color: Colors.transparent,
+                elevation: 0,
+                highlightElevation: 0,
+                disabledElevation: 0,
+                highlightColor: Colors.transparent,
+                splashColor: Colors.white30,
+                child: Container(
+                  width: size * BackgroundPaint.insideScaleRadius,
+                  height: size * BackgroundPaint.insideScaleRadius,
+                  child: Center(
+                    child: Text(_isActivated ? textOn : textOff,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 109.0, //hot fix for pixel XL  (must be <110.0)
+                            fontStyle: FontStyle.italic)),
+                  ),
                 ),
               ),
             ),
-            builder: (BuildContext context, Widget _widget) {
-              return new Transform.rotate(
-                angle: _animationController.value * pi,
-                child: _widget,
-              );
-            },
           ),
-          Center(
-              child: RaisedButton(
-            onPressed: _onTap,
-            shape: new CircleBorder(),
-            disabledColor: Colors.transparent,
-            color: Colors.transparent,
-            elevation: 0,
-            highlightElevation: 0,
-            disabledElevation: 0,
-            highlightColor: Colors.transparent,
-            splashColor: Colors.white30,
-            child: Container(
-              width: size * BackgroundPaint.insideScaleRadius,
-              height: size * BackgroundPaint.insideScaleRadius,
-              child: Center(
-                child: Text(_isActivated ? textOn : textOff,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 109.0, //hot fix for pixel XL  (must be <110.0)
-                        fontStyle: FontStyle.italic)),
-              ),
-            ),
-          )),
         ],
       )),
     );

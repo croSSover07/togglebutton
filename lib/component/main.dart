@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'gradient_slider.dart';
 import 'toggle_button.dart';
 
 class MyApp extends StatelessWidget {
@@ -24,28 +25,40 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Color color = Colors.black;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: Center(
-          child: Container(
-            width: 400,
-            height: 400,
-            child: ToggleButtonWidget(
+        body: Column(
+          children: <Widget>[
+            ToggleButtonWidget(
               textOn: "On",
               textOff: "Off",
               onPressed: onPress,
               isActivated: false,
             ),
-          ),
+            GradientSlider(fun: onSlide),
+            Container(
+              color: this.color,
+              width: 200,
+              height: 200,
+            )
+          ],
         ));
   }
 
   void onPress(bool isActivated) {
     print("isActivate: $isActivated");
+  }
+
+  void onSlide(Color color) {
+    setState(() {
+      this.color = color;
+    });
   }
 
   List<Widget> _another() {
