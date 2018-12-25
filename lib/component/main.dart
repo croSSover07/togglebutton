@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'common.dart';
 import 'gradient_slider.dart';
 import 'toggle_button.dart';
 
@@ -25,7 +26,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Color color = Colors.black;
+  Color colorFirst = colors[0];
+  Color colorSecond = colors[colors.length - 1];
+
+  bool _isActivated = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,25 +43,64 @@ class _MyHomePageState extends State<MyHomePage> {
               textOn: "On",
               textOff: "Off",
               onPressed: onPress,
-              isActivated: false,
+              isActivated: _isActivated,
             ),
-            GradientSlider(fun: onSlide),
-            Container(
-              color: this.color,
-              width: 200,
-              height: 200,
+            GradientSlider(fun: onSlideFirst),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+              child: GradientSlider(fun: onSlideSecond),
+            ),
+            Center(
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(top: 32),
+                    decoration: BoxDecoration(
+                        color: this.colorFirst, shape: BoxShape.circle),
+                    width: 100,
+                    height: 100,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(top: 32),
+                    decoration: BoxDecoration(
+                        color: this.colorSecond, shape: BoxShape.circle),
+                    width: 100,
+                    height: 100,
+                  )
+                ],
+              ),
             )
           ],
         ));
   }
 
   void onPress(bool isActivated) {
-    print("isActivate: $isActivated");
+    _isActivated = isActivated;
   }
 
-  void onSlide(Color color) {
+  void onSlideFirst(Color color) {
     setState(() {
-      this.color = color;
+      this.colorFirst = color;
+      var hslColor = HSLColor.fromColor(color);
+
+      colors[0] = hslColor.withLightness(0.6).toColor();
+      colors[1] = hslColor.withLightness(0.8).toColor();
+
+      colorsDarker[0] = hslColor.withLightness(0.5).toColor();
+      colorsDarker[1] = hslColor.withLightness(0.6).toColor();
+    });
+  }
+
+  void onSlideSecond(Color color) {
+    setState(() {
+      this.colorSecond = color;
+      var hslColor = HSLColor.fromColor(color);
+
+      colors[2] = hslColor.withLightness(0.6).toColor();
+      colors[3] = hslColor.withLightness(0.8).toColor();
+
+      colorsDarker[2] = hslColor.withLightness(0.5).toColor();
+      colorsDarker[3] = hslColor.withLightness(0.6).toColor();
     });
   }
 

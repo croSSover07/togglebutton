@@ -13,3 +13,16 @@ Color lerpGradient(List<Color> colors, List<double> stops, double t) {
   }
   return colors.last;
 }
+
+var colors = [
+  Colors.red.shade400,
+  Colors.red.shade200,
+  Colors.blue.shade200,
+  Colors.blue.shade400
+];
+var colorsDarker = [
+  Colors.red.shade500,
+  Colors.red.shade400,
+  Colors.blue.shade400,
+  Colors.blue.shade500
+];

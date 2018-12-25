@@ -1,22 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'common.dart';
 
 class BackgroundPaint extends CustomPainter {
   static const double insideScaleRadius = 0.7;
-
-  static var _colors = [
-    Colors.red.shade400,
-    Colors.red.shade200,
-    Colors.blue.shade200,
-    Colors.blue.shade400
-  ];
-  static var _colorsDarker = [
-    Colors.red.shade500,
-    Colors.red.shade400,
-    Colors.blue.shade400,
-    Colors.blue.shade500
-  ];
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -28,7 +16,7 @@ class BackgroundPaint extends CustomPainter {
       ..style = PaintingStyle.fill
       ..strokeWidth = 32.0
       ..shader = new LinearGradient(
-              colors: _colors,
+              colors: colors,
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter)
           .createShader(rect);
@@ -38,7 +26,7 @@ class BackgroundPaint extends CustomPainter {
       ..strokeWidth = 32.0
       ..maskFilter = MaskFilter.blur(BlurStyle.normal, 25.0)
       ..shader = new LinearGradient(
-              colors: _colorsDarker,
+              colors: colorsDarker,
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter)
           .createShader(rect);
