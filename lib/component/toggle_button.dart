@@ -60,33 +60,32 @@ class _ToggleButtonState extends State<StatefulWidget>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _onTap,
-      child: Center(
-          child: Stack(
-        children: <Widget>[
-          Center(
-            child: AnimatedBuilder(
-              animation: _animationController,
-              child: Center(
-                child: Container(
-                  width: size,
-                  height: size,
-                  child: new CustomPaint(
-                    painter: BackgroundPaint(),
+      child: AspectRatio(
+        aspectRatio: 1.0,
+        child: Center(
+            child: Stack(
+          children: <Widget>[
+            Center(
+              child: AnimatedBuilder(
+                animation: _animationController,
+                child: Center(
+                  child: Container(
+                    constraints:
+                        BoxConstraints.expand(width: size, height: size),
+                    child: new CustomPaint(
+                      painter: BackgroundPaint(),
+                    ),
                   ),
                 ),
+                builder: (BuildContext context, Widget _widget) {
+                  return new Transform.rotate(
+                    angle: _animationController.value * pi,
+                    child: _widget,
+                  );
+                },
               ),
-              builder: (BuildContext context, Widget _widget) {
-                return new Transform.rotate(
-                  angle: _animationController.value * pi,
-                  child: _widget,
-                );
-              },
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: size * (1 - BackgroundPaint.insideScaleRadius) / 2),
-            child: Center(
+            Center(
               child: RaisedButton(
                 onPressed: _onTap,
                 shape: new CircleBorder(),
@@ -110,9 +109,9 @@ class _ToggleButtonState extends State<StatefulWidget>
                 ),
               ),
             ),
-          ),
-        ],
-      )),
+          ],
+        )),
+      ),
     );
   }
 
