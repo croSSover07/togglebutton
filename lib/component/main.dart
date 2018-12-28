@@ -37,40 +37,47 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: Column(
-          children: <Widget>[
-            ToggleButtonWidget(
-              textOn: "On",
-              textOff: "Off",
-              onPressed: onPress,
-              isActivated: _isActivated,
-            ),
-            GradientSlider(fun: onSlideFirst),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-              child: GradientSlider(fun: onSlideSecond),
-            ),
-            Center(
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(top: 32),
-                    decoration: BoxDecoration(
-                        color: this.colorFirst, shape: BoxShape.circle),
-                    width: 100,
-                    height: 100,
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(top: 32),
-                    decoration: BoxDecoration(
-                        color: this.colorSecond, shape: BoxShape.circle),
-                    width: 100,
-                    height: 100,
-                  )
-                ],
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              ToggleButtonWidget(
+                textOn: "On",
+                textOff: "Off",
+                onPressed: onPress,
+                isActivated: _isActivated,
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: GradientSlider(fun: onSlideFirst),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: GradientSlider(fun: onSlideSecond),
+              ),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(top: 32),
+                      decoration: BoxDecoration(
+                          color: this.colorFirst, shape: BoxShape.circle),
+                      width: 100,
+                      height: 100,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 32),
+                      decoration: BoxDecoration(
+                          color: this.colorSecond, shape: BoxShape.circle),
+                      width: 100,
+                      height: 100,
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ));
   }
 
