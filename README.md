@@ -1,8 +1,10 @@
-# toggle_button
+#Custom widget
 
-A new Flutter project.
+
+![](sample.gif)
+
+
 
 ## Getting Started
 
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+For install Flutter, view online [documentation](https://flutter.io/docs/get-started/install).
